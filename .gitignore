@@ -1,0 +1,18 @@
+# Ignore VSCODE configuration
+.vscode/
+
+# Ignore Function test folder
+func_test/
+
+# Ignore object files
+src/
+
+# Ignore result of test code
+x_inlier.dvec
+y_inlier.dvec
+x_outlier.dvec
+y_outlier.dvec
+
+# Ignore compiled files
+*.o
+*.exe
