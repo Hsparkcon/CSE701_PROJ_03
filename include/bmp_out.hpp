@@ -28,10 +28,6 @@ public:
         this->set_file_header();
         this->set_info_header();
 
-        std::cout << sizeof(BMP_FILE_HEADER) << std::endl;
-        std::cout << sizeof(BMP_INFO_HEADER) << std::endl;
-        std::cout << sizeof(m_file_header) << std::endl;
-
         write_image.write(reinterpret_cast<char *>(&m_file_header), 14);
         write_image.write(reinterpret_cast<char *>(&m_info_header), 40);
 
@@ -55,7 +51,7 @@ public:
 
     int32_t get_height() const
     {
-        return this->m_image_width;
+        return this->m_image_height;
     }
 
     void get_size(int32_t &image_width, int32_t &image_height)
@@ -100,7 +96,7 @@ public:
     void set_image_black()
     {
         RGB_COLOUR temp_colour;
-        temp_colour.set_white();
+        temp_colour.set_black();
         for (auto &row : this->m_pixel_colour_data)
         {
             for (auto &pixel_data : row)
