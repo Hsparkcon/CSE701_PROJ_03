@@ -1,7 +1,7 @@
 /**
  * The file contains facade version of outlier detection method.
  * The class FACADE_DETECTION inherits class OUTLIER_DETECTION with is-a relation
-*/
+ */
 #pragma once
 #include "outlier_detection.hpp"
 

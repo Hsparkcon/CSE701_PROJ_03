@@ -6,8 +6,14 @@
 class BMP_OUT : public BMP_HEADER
 {
 public:
-    BMP_OUT() {}
-    BMP_OUT(const int32_t image_width, const int32_t image_height)
+    BMP_OUT()
+    {
+        /*
+            default constructor need to be deleted
+        */
+    }
+
+    BMP_OUT(const uint32_t image_width, const uint32_t image_height)
     {
         this->set_size(image_width, image_height);
     }
@@ -19,17 +25,13 @@ public:
 
         if (write_image.is_open() == false)
         {
-            /*
-                throw runtime error with message
-                ERROR - FAILED TO CREATE IMAGE
-            */
+            throw std::runtime_error("Failed to create a bmp file.");
         }
 
         this->set_file_header();
         this->set_info_header();
-
-        write_image.write(reinterpret_cast<char *>(&m_file_header), 14);
-        write_image.write(reinterpret_cast<char *>(&m_info_header), 40);
+        write_image.write(reinterpret_cast<char *>(&m_file_header), size_file_header);
+        write_image.write(reinterpret_cast<char *>(&m_info_header), size_info_header);
 
         for (const auto &row : this->m_pixel_colour_data)
         {
@@ -44,23 +46,23 @@ public:
         write_image.close();
     }
 
-    int32_t get_width() const
+    uint32_t get_width() const
     {
         return this->m_image_width;
     }
 
-    int32_t get_height() const
+    uint32_t get_height() const
     {
         return this->m_image_height;
     }
 
-    void get_size(int32_t &image_width, int32_t &image_height)
+    void get_size(uint32_t &image_width, uint32_t &image_height)
     {
         image_width = this->get_width();
         image_height = this->get_height();
     }
 
-    void set_size(const int32_t image_width, const int32_t image_height)
+    void set_size(const uint32_t image_width, const uint32_t image_height)
     {
         this->m_image_width = image_width;
         this->m_image_height = image_height;
@@ -70,7 +72,7 @@ public:
         m_pixel_colour_data.resize(image_height, std::vector<RGB_COLOUR>(image_width, temp_colour));
     }
 
-    RGB_COLOUR get_pixel_colour(const uint32_t x, const uint32_t y)
+    RGB_COLOUR get_pixel_colour(const uint32_t x, const uint32_t y) const
     {
         return m_pixel_colour_data[y][x];
     }
@@ -118,8 +120,8 @@ public:
     }
 
 private:
-    int32_t m_image_width;
-    int32_t m_image_height;
+    uint32_t m_image_width;
+    uint32_t m_image_height;
     std::vector<std::vector<RGB_COLOUR>> m_pixel_colour_data;
 
     const uint32_t size_file_header = 14; // in bytes
@@ -130,7 +132,8 @@ private:
 
     uint32_t required_padding;
     char8_t bmp_padding[3] = {0, 0, 0};
-    u_int32_t compute_padding()
+    
+    uint32_t compute_padding()
     {
         return (4 - (this->m_image_width * 3) % 4) % 4;
         /*

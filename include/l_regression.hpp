@@ -1,7 +1,7 @@
 /**
  * The file contains least square regression methods with array operations for the project.
  * The L_REGRESSION class will be seperated into ARRAY_OPERATION and OLS_REGRESSION classes
-*/
+ */
 #pragma once
 #include "PCH.hpp"
 

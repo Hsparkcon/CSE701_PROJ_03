@@ -1,7 +1,7 @@
 /**
  * The file contains data input/output functions required by the project.
  * The class DATA_IO uses DATA_READ and DATA_WRITE classes with has-a relation.
-*/
+ */
 #pragma once
 #include "data_read.hpp"
 #include "data_write.hpp"

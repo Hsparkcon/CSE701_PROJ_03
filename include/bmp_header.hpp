@@ -8,24 +8,24 @@ public:
     ~BMP_HEADER() {}
 
 protected:
-    /*
-        #pragma pack(push, 1) is used to prevent padding issue.
-        with default setting, sizeof(BMP_FILE_HEADER) equals to 16 bytes even sum of size of every variable inside stucut is 14 bytes.
-        It is because compiler adds extra 2 bytes at the end of struct to let the size is power of 4 bytes.
-        It causes error in size of BMP header size that image viewer expect 54 bytes while actual size is 56 bytes.
-        This will push every data in the image file (in binary) to right by 2bytes which will destory reqired structure.
+/*
+    #pragma pack(push, 1) is used to prevent padding issue.
+    with default setting, sizeof(BMP_FILE_HEADER) equals to 16 bytes even sum of size of every variable inside stucut is 14 bytes.
+    It is because compiler adds extra 2 bytes at the end of struct to let the size is power of 4 bytes.
+    It causes error in size of BMP header size that image viewer expect 54 bytes while actual size is 56 bytes.
+    This will push every data in the image file (in binary) to right by 2bytes which will destory reqired structure.
 
-        To prevent the problem, 
-            - unsigned char array with size 14 byes => unsigned char file_header[14] or
-            - turn off automated padding option.
-        can be used
+    To prevent the problem,
+        - unsigned char array with size 14 byes => unsigned char file_header[14] or
+        - turn off automated padding option.
+    can be used
 
-        In this project,
-        structure with #pragma pack(push, 1) is used for code readability (use structure with named variable).
+    In this project,
+    structure with #pragma pack(push, 1) is used for code readability (use structure with named variable).
 
-        Note: https://solarianprogrammer.com/2018/11/19/cpp-reading-writing-bmp-images/
-    */
-    #pragma pack(push, 1)
+    Note: https://solarianprogrammer.com/2018/11/19/cpp-reading-writing-bmp-images/
+*/
+#pragma pack(push, 1)
     struct BMP_FILE_HEADER
     {
         uint16_t file_type{0x4D42}; // type BM in hex is 4D42, and 0x is for denoting hex.
@@ -34,7 +34,7 @@ protected:
         uint16_t reserved2{0};      // always 0
         uint32_t offset_data{0};    // start position of the pixel data in the file = size_of(BMP_FILE_HEADER) + size_of(BMP_INFO_HEADER) + 1
     };
-    #pragma pack(pop)
+#pragma pack(pop)
 
     struct BMP_INFO_HEADER
     {

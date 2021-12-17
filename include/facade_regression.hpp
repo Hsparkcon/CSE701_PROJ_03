@@ -1,7 +1,7 @@
 /**
  * The file contains facade version of outlier detection method.
  * The class FACADE_REGRESSION inherits class REGRESSION_ROBUST and its derived classes with is-a relation
-*/
+ */
 #pragma once
 #include "PCH.hpp"
 #include "regression_robust.hpp"

@@ -1,6 +1,6 @@
 /**
  * The file contains data input functions required by the project.
-*/
+ */
 
 #pragma once
 #include "PCH.hpp"
@@ -8,8 +8,8 @@
 class READ_VEC
 {
 public:
-    READ_VEC(){}
-    virtual ~READ_VEC(){}
+    READ_VEC() {}
+    virtual ~READ_VEC() {}
 
     bool load_vec_UNSAFE(std::string file_name, std::vector<double> &output_vec)
     {
@@ -45,7 +45,8 @@ public:
         return true;
     }
 
-    bool load_vec_SAFE(std::string file_name, std::vector<double> &output_vec){
+    bool load_vec_SAFE(std::string file_name, std::vector<double> &output_vec)
+    {
         return false;
     }
 };
