@@ -28,10 +28,6 @@ x64/
 *.vcxproj.user
 *.sln
 
-
-
-
-
 # Ignore result of test code
 x_inlier.dvec
 y_inlier.dvec
