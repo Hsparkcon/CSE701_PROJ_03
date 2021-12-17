@@ -8,12 +8,28 @@ func_test/
 obj/
 
 # Ignore Makefile made by CMake
-Makefile
-makefile
+# for both
+CMakeFiles/
 cmake_install.cmake
 CMakeCache.txt
 
-CMakeFiles/
+# for Linux
+Makefile
+makefile
+
+# for Windows
+.vs
+Debug/
+proj_r.dir/
+Release/
+x64/
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.sln
+
+
+
 
 
 # Ignore result of test code
