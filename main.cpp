@@ -1,5 +1,6 @@
 #include "include/facade_regression.hpp"
 #include "include/facade_detection.hpp"
+#include "include/facade_plot.hpp"
 #include "include/data_io.hpp"
 
 int main(int argc, char *argv[])
@@ -62,11 +63,16 @@ int main(int argc, char *argv[])
     data_io.write_vec("x_inlier.dvec", x_inlier);
     data_io.write_vec("y_inlier.dvec", y_inlier);
 
-    std::cout << 
-        "Computed slope: " << std::scientific << m_slope << "\n"
-        "Computed intercept: " << std::scientific << b_intercept << "\n"
-        "Detected outliers: "  << num_detected_outlier << " out of " << x_observed.size() << "\n"
-    << std::endl;
+    std::cout << "Computed slope: " << std::scientific << m_slope << "\n"
+                                                                     "Computed intercept: "
+              << std::scientific << b_intercept << "\n"
+                                                   "Detected outliers: "
+              << num_detected_outlier << " out of " << x_observed.size() << "\n"
+              << std::endl;
+
+    FACADE_PLOT plot_result(x_observed, y_observed, x_outlier, y_outlier, x_inlier, y_inlier, m_slope, b_intercept);
+    plot_result.draw_all();
+    plot_result.generate_plot("result_plot.bmp");
 
     return 0;
 }

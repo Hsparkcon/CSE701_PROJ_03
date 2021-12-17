@@ -5,13 +5,24 @@
 func_test/
 
 # Ignore object files
-src/
+obj/
+
+# Ignore Makefile made by CMake
+Makefile
+makefile
+cmake_install.cmake
+CMakeCache.txt
+
+CMakeFiles/
+
 
 # Ignore result of test code
 x_inlier.dvec
 y_inlier.dvec
 x_outlier.dvec
 y_outlier.dvec
+result_plot.bmp
+proj_r
 
 # Ignore compiled files
 *.o

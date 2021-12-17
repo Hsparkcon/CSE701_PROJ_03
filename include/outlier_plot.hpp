@@ -145,11 +145,11 @@ private:
         if (m_actual_width > m_actual_height)
         {
             m_graph_width = max_dimension;
-            m_graph_height = m_actual_height / m_actual_width * max_dimension;
+            m_graph_height = static_cast<uint32_t>(std::round(m_actual_height / m_actual_width * static_cast<double>(max_dimension)));
         }
         else if (m_actual_width < m_actual_height)
         {
-            m_graph_width = m_actual_width / m_actual_height * max_dimension;
+            m_graph_width = static_cast<uint32_t>(std::round(m_actual_width / m_actual_height * static_cast<double>(max_dimension)));
             m_graph_height = max_dimension;
         }
         else
