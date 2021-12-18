@@ -24,8 +24,10 @@ int main(int argc, char *argv[])
                      "\tPath to the second file - observed y data.\n\n"
                   << std::endl;
 
-        std::cout << "Example Input\n"
-                     "\tproj_r.out bisquare standardized_residual observed_x.dvec observed_y.dvec\n"
+        std::cout << "Example Input for Linux\n"
+                     "\tproj_r bisquare standardized_residual observed_x.dvec observed_y.dvec\n"
+                     "Example Input for Windows\n"
+                     "\tproj_r.exe bisquare standardized_residual observed_x.dvec observed_y.dvec\n"
                   << std::endl;
         return 0;
     }
