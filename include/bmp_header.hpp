@@ -1,10 +1,37 @@
 #pragma once
 #include "PCH.hpp"
 
+/**
+ * @brief
+ * BMP_HEADER class contains structure of header required for BMP file.
+ * Each header structure is written based on the following links
+ * - https://en.wikipedia.org/wiki/BMP_file_format
+ * - http://www.ece.ualberta.ca/~elliott/ee552/studentAppNotes/2003_w/misc/bmp_file_format/bmp_file_format.htm
+ * - https://docs.fileformat.com/image/bmp/
+ * - https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-bitmapinfoheader
+ * - https://solarianprogrammer.com/2018/11/19/cpp-reading-writing-bmp-images/
+ *
+ * BMP_HEADER class contains three header structures
+ * - BMP_FILE_HEADER
+ * - BMP_INFO_HEADER
+ * - BMP_COLOUR_HEADER
+ * In CSE701 Project 03, the plot functions that generate the .bmp file do not support colour transparency.
+ * Therefore, the BMP_COLOUR_HEADER structure is not used in the project.
+ * However, it is contained in BMP_HEADER class for future usage.
+ */
 class BMP_HEADER
 {
 public:
+    /**
+     * @brief default contructor
+     *
+     */
     BMP_HEADER() {}
+
+    /**
+     * @brief default destructor
+     *
+     */
     ~BMP_HEADER() {}
 
 protected:
@@ -26,6 +53,12 @@ protected:
     Note: https://solarianprogrammer.com/2018/11/19/cpp-reading-writing-bmp-images/
 */
 #pragma pack(push, 1)
+    /**
+     * @brief
+     * FILE_HEADER structure of .bmp format.
+     * The size of the struct must be 14 bytes.
+     * Must be aware of automated padding to prevent struct size expansion.
+     */
     struct BMP_FILE_HEADER
     {
         uint16_t file_type{0x4D42}; // type BM in hex is 4D42, and 0x is for denoting hex.
@@ -36,6 +69,11 @@ protected:
     };
 #pragma pack(pop)
 
+    /**
+     * @brief
+     * INFO_HEADER structure of .bmp format.
+     * The size of the struct must be 40 bytes.
+     */
     struct BMP_INFO_HEADER
     {
         uint32_t info_header_size{0}; // size of bmp info header struct
@@ -46,16 +84,22 @@ protected:
                                           check - https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-bitmapinfoheader
                                       */
 
-        uint16_t planes{1};                // number of planes of target device = 1
-        uint16_t bit_per_pixel{0};         // Number of bits per pixel. For uncompressed image bpp = avg of bit per pixel
-        uint32_t bit_compression{0};       // 0 or 3 - uncompressed. THIS PROGRAM CONSIDERS ONLY UNCOMPRESSED BMP images
-        uint32_t bit_size_image{0};        // Size of image in byte. The value can be set to 0 if it is uncompressed RGB bmp image.
-        int32_t pixels_per_meter_x{0};     // Horizontal resolution of the target device
-        int32_t pixels_per_meter_y{0};     // Vertical resolution of the target device
-        uint32_t bit_colours_used{0};      // Num of colour indices in the colour table. 0 for the max num of colours allowed by bit_count
-        uint32_t bit_colours_important{0}; // Num of colours use for bmp displaying. 0 for all colour are used
+        uint16_t planes{1};            // number of planes of target device = 1
+        uint16_t bit_per_pixel{0};     // Number of bits per pixel. For uncompressed image bpp = avg of bit per pixel
+        uint32_t bit_compression{0};   // 0 or 3 - uncompressed. THIS PROGRAM CONSIDERS ONLY UNCOMPRESSED BMP images
+        uint32_t byte_size_image{0};   // Size of image in byte. The value can be set to 0 if it is uncompressed RGB bmp image.
+        int32_t pixels_per_meter_x{0}; // Horizontal resolution of the target device
+        int32_t pixels_per_meter_y{0}; // Vertical resolution of the target device
+        uint32_t colours_used{0};      // Num of colour indices in the colour table. 0 for the max num of colours allowed by bit_count
+        uint32_t colours_important{0}; // Num of colours use for bmp displaying. 0 for all colour are used
     };
 
+    /**
+     * @brief
+     * COLOUR_HEADER of .bmp format.
+     * The size of the struct must be 24 bytes.
+     *
+     */
     struct BMP_COLOUR_HEADER
     {
         uint32_t red_mask{0x00ff0000};          // Bit mask for the red channel = 255 0 0 in RGB order

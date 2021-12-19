@@ -66,8 +66,6 @@ public:
     }
 
 private:
-    BMP_OUT plot_result;
-
     std::vector<double> m_x_observed;
     std::vector<double> m_y_observed;
     std::vector<double> m_x_outlier;

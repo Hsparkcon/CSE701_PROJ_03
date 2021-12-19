@@ -1,6 +1,6 @@
 /**
  * The file contains data input/output functions required by the project.
- * The class DATA_IO uses DATA_READ and DATA_WRITE classes with has-a relation.
+ * 
  */
 #pragma once
 #include "data_read.hpp"
@@ -26,6 +26,7 @@ enum class IO_MODE
  * the use of DATA_IO class is preferred to safety.
  * DATA_IO class does not contain a validation process as
  * validation processes will be done in DATA_READ and DATA_WRITE classes.
+ * DATA_IO class uses DATA_READ and DATA_WRITE classes with has-a relation.
  */
 class DATA_IO
 {
