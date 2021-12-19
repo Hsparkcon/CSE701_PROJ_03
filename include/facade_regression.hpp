@@ -153,6 +153,13 @@ public:
     }
 
 private:
+    REGRESSION_METHOD m_target_method;
+    double m_m_slope;
+    double m_b_intercept;
+    std::vector<double> m_x_observed;
+    std::vector<double> m_y_observed;
+    std::vector<double> m_w_weight;
+
     void validate_input_len(uint32_t x_length, uint32_t y_length)
     {
         if (x_length != y_length)
@@ -160,11 +167,4 @@ private:
             // throw logic error
         }
     }
-
-    REGRESSION_METHOD m_target_method;
-    double m_m_slope;
-    double m_b_intercept;
-    std::vector<double> m_x_observed;
-    std::vector<double> m_y_observed;
-    std::vector<double> m_w_weight;
 };
