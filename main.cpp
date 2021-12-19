@@ -60,8 +60,8 @@ int main(int argc, char *argv[])
     outlier_detect.get_outliers(x_outlier, y_outlier);
     outlier_detect.get_inliers(x_inlier, y_inlier);
 
-    data_io.write_vec_2("outlier_data.dvec", x_outlier, y_outlier);
-    data_io.write_vec_2("inlier_data.dvec", x_inlier, y_inlier);
+    data_io.write_vec("outlier_data.dvec", x_outlier, y_outlier);
+    data_io.write_vec("inlier_data.dvec", x_inlier, y_inlier);
 
     std::cout << "Computed slope: " << std::scientific << m_slope << "\n"
                                                                      "Computed intercept: "

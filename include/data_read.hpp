@@ -3,7 +3,7 @@
 
 /**
  * @class READ_DATA
- * @brief READ_DATA class is designed to contain functions load data required by the program.
+ * @brief READ_DATA class is designed to contain functions to load data required by the program.
  * @details
  *  READ_DATA class supports the following data formats.
  *  .dvec - custom data format for the project, preferred when the use of a spreadsheet is not expected
@@ -161,8 +161,7 @@ private:
      *  The function validates the existence of the received path and
      *  throws a "runtime exception" if the path does not exist.
      *
-     * @param[in] file_name
-     *  The path to the targeted file.
+     * @param[in] file_name The path to the targeted file.
      */
     void validate_target_is_exist(const std::string &file_name)
     {
@@ -182,8 +181,7 @@ private:
      *  The function validates the targeted path is a file and
      *  throws a "runtime exception" if the path is not a file.
      *
-     * @param[in] file_name
-     *  The path to the targeted file.
+     * @param[in] file_name The path to the targeted file.
      */
     void validate_target_is_file(const std::string &file_name)
     {
