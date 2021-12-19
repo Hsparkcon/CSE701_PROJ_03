@@ -21,16 +21,16 @@ public:
 
     ~DATA_IO() {}
 
-    bool load_vec(std::string file_name, std::vector<double> &output_vec)
+    bool load_vec(std::string file_name, std::vector<double> &output_vec_one, std::vector<double> &output_vec_two)
     {
         bool load_result = true;
         switch (m_io_method)
         {
         case IO_MODE::SAFE:
-            load_result = r_vec.load_vec_SAFE(file_name, output_vec);
+            // load_result = r_vec.load_vec_SAFE(file_name, output_vec_one, output_vec_two);
             break;
         case IO_MODE::UNSAFE:
-            load_result = r_vec.load_vec_UNSAFE(file_name, output_vec);
+            load_result = r_vec.load_vec_UNSAFE(file_name, output_vec_one, output_vec_two);
             break;
         }
         return load_result;
@@ -45,6 +45,20 @@ public:
             break;
         case IO_MODE::UNSAFE:
             w_vec.write_vec_UNSAFE(file_name, output_vec);
+            break;
+        }
+        return true;
+    }
+
+    bool write_vec_2(std::string file_name, std::vector<double> &output_vec_one, std::vector<double> &output_vec_two)
+    {
+        switch (m_io_method)
+        {
+        case IO_MODE::SAFE:
+            // w_vec.write_vec_SAFE(file_name, output_vec_one, output_vec_two);
+            break;
+        case IO_MODE::UNSAFE:
+            w_vec.write_vec_UNSAFE(file_name, output_vec_one, output_vec_two);
             break;
         }
         return true;

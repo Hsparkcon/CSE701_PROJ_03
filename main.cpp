@@ -5,6 +5,7 @@
 
 int main(int argc, char *argv[])
 {
+    argc = 5;
     if (argc < 5 || argc > 5)
     {
         std::cout << "The program is designed to perform linear regression and detect outlier.\n\n"
@@ -37,8 +38,7 @@ int main(int argc, char *argv[])
     std::vector<double> y_observed;
     REGRESSION_METHOD reg_method = validate_reg_method(argv[1]);
     DETECTION_METHOD det_method = validate_det_method(argv[2]);
-    data_io.load_vec(argv[3], x_observed);
-    data_io.load_vec(argv[4], y_observed);
+    data_io.load_vec(argv[3], x_observed, y_observed);
 
     FACADE_REGRESSION regression(x_observed, y_observed, reg_method);
     regression.proceed_regression();
@@ -60,10 +60,8 @@ int main(int argc, char *argv[])
     outlier_detect.get_outliers(x_outlier, y_outlier);
     outlier_detect.get_inliers(x_inlier, y_inlier);
 
-    data_io.write_vec("x_outlier.dvec", x_outlier);
-    data_io.write_vec("y_outlier.dvec", y_outlier);
-    data_io.write_vec("x_inlier.dvec", x_inlier);
-    data_io.write_vec("y_inlier.dvec", y_inlier);
+    data_io.write_vec_2("outlier_data.dvec", x_outlier, y_outlier);
+    data_io.write_vec_2("inlier_data.dvec", x_inlier, y_inlier);
 
     std::cout << "Computed slope: " << std::scientific << m_slope << "\n"
                                                                      "Computed intercept: "

@@ -31,8 +31,12 @@ x64/
 # Ignore result of test code
 x_inlier.dvec
 y_inlier.dvec
+inlier_data.dvec
+inlier_data.csv
 x_outlier.dvec
 y_outlier.dvec
+outlier_data.dvec
+outlier_data.csv
 result_plot.bmp
 proj_r
 

@@ -8,6 +8,7 @@
 #include <numeric>
 #include <numbers> // for PI, from C++20
 #include <algorithm>
+#include <filesystem>
 #include <exception>
 
 #define TRACKER(x) std::cout << "Passed Point - " << x << std::endl
