@@ -1,14 +1,10 @@
-/**
- * The file contains data input/output functions required by the project.
- * 
- */
 #pragma once
 #include "data_read.hpp"
 #include "data_write.hpp"
 
 /**
  * @brief
- * ENUM CLASS that contains variables to distinguish SAFE and UNSAFE data loading/writing method.
+ * ENUM CLASS that contains variables to choose data loading/writing method.
  */
 enum class IO_MODE
 {
