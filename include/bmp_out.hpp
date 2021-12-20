@@ -270,6 +270,29 @@ private:
 
     /**
      * @brief
+     * The function validates a targeted coordinate is accessible.
+     * Simply it checks targeted pixel coordinate is not bigger than the dimension of an image.
+     * 
+     * @param x Targeted X-coordinate in pixel.
+     * @param y Targeted Y-coordinate in pixel.
+     */
+    void validate_coordinate(const uint32_t x, const uint32_t y){
+        
+        if(x > m_image_width || y > m_image_height){
+            std::string error_message =
+                "BMP ERROR - CANNOT ACCESS THE TARGETED COORDINATE.\n"
+                "The target coordinate cannot be bigger than the image size.\n"
+                "IMAGE WIDTH  : " + std::to_string(m_image_width) + "\n"
+                "IMAGE HEIGHT : " + std::to_string(m_image_height) + "\n"
+                "But the targeted coordinate is\n"
+                "X-coordinate :" + std::to_string(x) + "\n"
+                "Y-coordinate :" + std::to_string(y) + "\n";
+            throw std::runtime_error(error_message);
+        }
+    }
+
+    /**
+     * @brief
      * The function validates a vector that contains pixel data is empty or not and
      * throws a runtime error if the vector is empty.
      *
