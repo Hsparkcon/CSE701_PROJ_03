@@ -159,7 +159,7 @@ public:
 
         for (uint32_t iter = 0; iter < w_weight.size(); iter++)
         {
-            if (w_weight[iter] < 1)
+            if (w_weight[iter] < weight_tolerance)
             {
                 x_outlier.push_back(x_observed[iter]);
                 y_outlier.push_back(y_observed[iter]);

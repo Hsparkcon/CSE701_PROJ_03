@@ -18,7 +18,7 @@ enum class DETECTION_METHOD
 /**
  * @brief
  * Validates chosen method given through command-line argument is correct.
- * It throws a runtime exception if such a method does not exist.
+ * It throws a runtime exception if such a method does not exist in the predefined list.
  *
  * @param[in] target_method targeted method
  * @return DETECTION_METHOD
@@ -54,7 +54,7 @@ DETECTION_METHOD validate_det_method(const std::string &target_method)
  *  the required data can be appropriately provided.
  *  Use of FACADE_DETECTION class is suggested instead of OUTLIER_DETECTION class
  *  if the user does not plan to change internal computation methods.
- *  FACADE_DETECTION class inherits class OUTLIER_DETECTION with is-a relation.
+ *  FACADE_DETECTION class inherits OUTLIER_DETECTION class with is-a relation.
  */
 class FACADE_DETECTION : public OUTLIER_DETECTION
 {

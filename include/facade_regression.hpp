@@ -14,6 +14,10 @@
 #include "m_estimator_talwar.hpp"
 #include "m_estimator_welsch.hpp"
 
+/**
+ * @brief
+ * ENUM CLASS that contains variables to choose robust regression method.
+ */
 enum class REGRESSION_METHOD
 {
     ANDREWS,
@@ -26,6 +30,14 @@ enum class REGRESSION_METHOD
     WELSCH
 };
 
+/**
+ * @brief
+ * Validates chosen method given through command-line argument is correct.
+ * It throws a runtime exception if such a method does not exist in the predefined list.
+ *
+ * @param[in] target_method targeted method
+ * @return DETECTION_METHOD
+ */
 REGRESSION_METHOD validate_reg_method(const std::string &target_method)
 {
     std::map<std::string, REGRESSION_METHOD> method_list{
@@ -42,21 +54,60 @@ REGRESSION_METHOD validate_reg_method(const std::string &target_method)
 
     if (iter_method_list == method_list.end())
     {
-        /*
-            Throw error
-        */
+        std::string error_message =
+            "INPUT ARGUMENT ERROR - THERE IS NO SUCH METHOD.\n"
+            "Input must match with predefined methods while\n"
+            "given - " +
+            target_method + " - does not exist.\n"
+                            "Please choose the correct method based on the instruction by executing the program without parameters.";
+        throw std::runtime_error(error_message);
     }
 
     return iter_method_list->second;
 }
 
+/**
+ * @brief
+ *  FACADE_REGRESSION class is a simplified version of REGRESSION_ROBUST class.
+ *
+ * @details
+ *  FACADE_DETECTION class allows users not to worry about
+ *  vector initialization, computation process and others as long as
+ *  the required data can be appropriately provided.
+ *  Use of FACADE_DETECTION class is suggested instead of REGRESSION_ROBUST class
+ *  if the user does not plan to change internal computation methods or to use a custom weight function
+ *  FACADE_REGRESSION class uses REGRESSION_ROBUST with has-a relation.
+ */
 class FACADE_REGRESSION
 {
 public:
-    FACADE_REGRESSION() {}
-    FACADE_REGRESSION(std::vector<double> &x_observed, std::vector<double> &y_observed, REGRESSION_METHOD target_method)
+    /**
+     * @brief The default constructor, constructs a new FACADE_REGRESSION object that is not initialized.
+     * If it is used, the member variables must be initialized with the member function
+     * - set_method()
+     * - set_observed.
+     *
+     */
+    FACADE_REGRESSION()
     {
-        this->validate_input_len(static_cast<uint32_t>(x_observed.size()), static_cast<uint32_t>(y_observed.size()));
+        m_is_data_initialized = false;
+        m_is_method_initialized = false;
+    }
+
+    /**
+     * @brief Construct a new FACADE_REGRESSION object that is fully initialized member variables.
+     *
+     * @param[in] x_observed A collection of observed data's independent variables (X-Axis).
+     * @param[in] y_observed A collection of observed data's dependent variables (Y-Axis).
+     * @param[in] target_method Weight function that will be used for robust regression computation.
+     */
+    FACADE_REGRESSION(
+        const std::vector<double> &x_observed,
+        const std::vector<double> &y_observed,
+        const REGRESSION_METHOD target_method)
+    {
+        m_is_data_initialized = true;
+        m_is_method_initialized = true;
 
         this->m_x_observed = x_observed;
         this->m_y_observed = y_observed;
@@ -66,10 +117,24 @@ public:
         this->m_m_slope = 0.0;
         this->m_b_intercept = 0.0;
     }
+
+    /**
+     * @brief The default destructor, no special action required.
+     *
+     */
     ~FACADE_REGRESSION() {}
 
+    /**
+     * @brief
+     * Perfroms robust regression with the initialized member variables.
+     * Must be used after initialization; otherwise, it would throw a runtime error.
+     *
+     */
     void proceed_regression()
     {
+        validate_data_initialization();
+        validate_method_initialization();
+
         REGRESSION_ROBUST *regression = nullptr;
         switch (this->m_target_method)
         {
@@ -119,35 +184,66 @@ public:
         regression = nullptr;
     }
 
-    void set_input(std::vector<double> &x_observed, std::vector<double> &y_observed)
+    /**
+     * @brief Sets the new data for robust regression computation.
+     *
+     * @param[in] x_observed A collection of observed data's independent variables (X-Axis).
+     * @param[in] y_observed A collection of observed data's dependent variables (Y-Axis).
+     */
+    void set_observed(const std::vector<double> &x_observed, const std::vector<double> &y_observed)
     {
-        this->validate_input_len(static_cast<uint32_t>(x_observed.size()), static_cast<uint32_t>(y_observed.size()));
         this->m_x_observed = x_observed;
         this->m_y_observed = y_observed;
     }
 
-    void set_method(REGRESSION_METHOD target_method)
+    /**
+     * @brief Set the other weight function for robust regression computation.
+     *
+     * @param target_method Weight function listed in REGRESSION_METHOD.
+     */
+    void set_method(const REGRESSION_METHOD target_method)
     {
         this->m_target_method = target_method;
     }
 
+    /**
+     * @brief Gets the estimates of the line of best fit.
+     *
+     * @param[out] m_slope A slope of line of best fit.
+     * @param[out] b_intercept A intercept of line of best fit.
+     */
     void get_estimates(double &m_slope, double &b_intercept)
     {
         m_slope = this->get_m_slope();
         b_intercept = this->get_b_intercept();
     }
 
+    /**
+     * @brief Gets the approximate slope of the line of best fit.
+     *
+     * @return double
+     */
     double get_m_slope() const
     {
         return this->m_m_slope;
     }
 
+    /**
+     * @brief Gets the approximate intercept of the line of best fit.
+     *
+     * @return double
+     */
     double get_b_intercept() const
     {
         return this->m_b_intercept;
     }
 
-    void get_w_weight(std::vector<double> w_weight)
+    /**
+     * @brief Gets the weight of observed data point computed during the robust regression process.
+     *
+     * @param[out] w_weight A collection of observed data's weight.
+     */
+    void get_w_weight(std::vector<double> &w_weight)
     {
         w_weight = this->m_w_weight;
     }
@@ -160,11 +256,40 @@ private:
     std::vector<double> m_y_observed;
     std::vector<double> m_w_weight;
 
-    void validate_input_len(uint32_t x_length, uint32_t y_length)
+    bool m_is_data_initialized;
+    bool m_is_method_initialized;
+
+    /**
+     * @brief
+     * Validates the data for regression computation is initialized.
+     * If not initialized, it throws a runtime error.
+     *
+     */
+    void validate_data_initialization()
     {
-        if (x_length != y_length)
+        if (m_is_data_initialized == false)
         {
-            // throw logic error
+            std::string error_message =
+                "FACADE REGRESSION ERROR - DATA NOT INITIALIZED.\n"
+                "Observed data is not initialized.\n";
+            throw std::runtime_error(error_message);
+        }
+    }
+
+    /**
+     * @brief
+     * Validates the weight function for regression computation is chosen.
+     * If not initialized, it throws a runtime error.
+     *
+     */
+    void validate_method_initialization()
+    {
+        if (m_is_method_initialized == false)
+        {
+            std::string error_message =
+                "FACADE REGRESSION ERROR - WEIGHT FUNCTION NOT CHOSEN.\n"
+                "Weight function for regression method is not chosen.\n";
+            throw std::runtime_error(error_message);
         }
     }
 };
