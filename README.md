@@ -4,7 +4,7 @@
 
 - The code is designed to perform following operations.
 
-  - Computing parameters (slope and intercept) of **best line of fit** by rubust linear regression with M-estimation.
+  - Computing parameters (slope and intercept) of **best line of fit** by robust linear regression with M-estimation.
   
   - Detecting outliers in the given data by
     - standardized residual
