@@ -270,7 +270,7 @@ private:
         if (m_is_data_initialized == false)
         {
             std::string error_message =
-                "FACADE REGRESSION ERROR - DATA NOT INITIALIZED.\n"
+                "FACADE REGRESSION ERROR - DATA NOT INITIALIZED\n"
                 "Observed data is not initialized.\n";
             throw std::runtime_error(error_message);
         }

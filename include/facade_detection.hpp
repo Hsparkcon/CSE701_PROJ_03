@@ -262,7 +262,7 @@ private:
         if (ready_standardized_detection == false)
         {
             std::string error_message =
-                "FACADE DETECTION ERROR - CANNOT PROCEED WITH OUTLIER DETECTION.\n"
+                "FACADE DETECTION ERROR - CANNOT PROCEED OUTLIER DETECTION BY STANDARDIZED RESIDUAL\n"
                 "Use of standardized detection is chosen, but the object is not initialized for it.\n";
             throw std::runtime_error(error_message);
         }
@@ -291,7 +291,7 @@ private:
         if (ready_weight_detection == false)
         {
             std::string error_message =
-                "FACADE DETECTION ERROR - CANNOT PROCEED WITH OUTLIER DETECTION.\n"
+                "FACADE DETECTION ERROR - CANNOT PROCEED OUTLIER DETECTION BY WEIGHT\n"
                 "Use of weight detection is chosen, but the object is not initialized for it.\n";
             throw std::runtime_error(error_message);
         }

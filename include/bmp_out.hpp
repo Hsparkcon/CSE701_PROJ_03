@@ -280,7 +280,7 @@ private:
         
         if(x > m_image_width || y > m_image_height){
             std::string error_message =
-                "BMP ERROR - CANNOT ACCESS THE TARGETED COORDINATE.\n"
+                "BMP WRITE ERROR - CANNOT ACCESS THE TARGETED COORDINATE\n"
                 "The target coordinate cannot be bigger than the image size.\n"
                 "IMAGE WIDTH  : " + std::to_string(m_image_width) + "\n"
                 "IMAGE HEIGHT : " + std::to_string(m_image_height) + "\n"
@@ -302,7 +302,7 @@ private:
         if (m_pixel_colour_data.empty() == true)
         {
             std::string error_message =
-                "BMP ERROR - NO DATA TO GENERATE .BMP FILE\n"
+                "BMP WRITE ERROR - NO DATA TO GENERATE .BMP FILE\n"
                 "There is no PIXEL DATA to write .bmp file is empty.\n";
             throw std::runtime_error(error_message);
         }
@@ -322,7 +322,7 @@ private:
         if (file_path.extension() != target_format)
         {
             std::string error_message =
-                "BMP ERROR - INCORRECT FILE FORMAT.\n"
+                "BMP WRITE ERROR - INCORRECT FILE FORMAT\n"
                 "Input file format needs to be " + target_format + "\n"
                 "But received file - " + file_name + "- format is " + file_path.extension().string() + "\n";
             throw std::invalid_argument(error_message);
@@ -342,7 +342,7 @@ private:
         if (created_file.is_open() == false)
         {
             std::string error_message =
-                "BMP ERROR - FAILED TO CREATE A .BMP FILE TO PLOT RESULT.\n"
+                "BMP WRITE ERROR - FAILED TO CREATE A BMP FILE TO PLOT RESULT\n"
                 "Failed to create" + file_name + ".\n";
             throw std::runtime_error(error_message);
         }

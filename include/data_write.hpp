@@ -17,11 +17,11 @@
  * the length of data to be written
  * as minimum requirements.
  */
-class WRITE_VEC
+class DATA_WRITE
 {
 public:
-    WRITE_VEC() {}
-    virtual ~WRITE_VEC() {}
+    DATA_WRITE() {}
+    virtual ~DATA_WRITE() {}
 
     /**
      * @brief
@@ -156,7 +156,7 @@ private:
         if (file_path.extension() != target_format)
         {
             std::string error_message =
-                "READ ERROR - INCORRECT FILE FORMAT.\n"
+                "WRITE ERROR - INCORRECT FILE FORMAT\n"
                 "Input file format needs to be " + target_format + "\n"
                 "But received file - " + file_name + "- format is " + file_path.extension().string() + "\n";
             throw std::invalid_argument(error_message);
@@ -176,7 +176,7 @@ private:
         if (created_file.is_open() == false)
         {
             std::string error_message =
-                "WRITE ERROR - FAILED TO CREATE A FILE TO WRITE RESULT.\n"
+                "WRITE ERROR - FAILED TO CREATE A FILE TO WRITE RESULT\n"
                 "Failed to create" + file_name + ".\n";
             throw std::runtime_error(error_message);
         }

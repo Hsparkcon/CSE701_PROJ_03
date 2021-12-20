@@ -152,8 +152,8 @@ public:
 
 private:
     IO_MODE m_io_method;
-    READ_VEC r_vec;
-    WRITE_VEC w_vec;
+    DATA_READ r_vec;
+    DATA_WRITE w_vec;
 
     /**
      * @brief The print current IO mode of the object.
