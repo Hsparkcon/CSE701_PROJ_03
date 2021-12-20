@@ -1,5 +1,5 @@
 #pragma once
-#include "l_regression.hpp"
+#include "regression_basic.hpp"
 
 /**
  * @brief
@@ -8,7 +8,7 @@
  * REGRESSION_ROBUST class member function "compute_weight()" is declared as pure weight function
  * that must be implemented at a derived class.
  */
-class REGRESSION_ROBUST : public L_REGRESSION
+class REGRESSION_ROBUST : public REGRESSION_BASIC
 {
 public:
     REGRESSION_ROBUST() {}
@@ -83,23 +83,23 @@ public:
     {
         double init_slope = 0;
         double init_intercept = 0;
-        L_REGRESSION::ols_regression(m_x_observed, m_y_observed, m_slope, m_intercept);
-        L_REGRESSION::compute_predict(init_slope, init_intercept, m_x_observed, m_y_predicted);
+        REGRESSION_BASIC::ols_regression(m_x_observed, m_y_observed, m_slope, m_intercept);
+        REGRESSION_BASIC::compute_predict(init_slope, init_intercept, m_x_observed, m_y_predicted);
         this->init_weight(m_y_observed, m_y_predicted, m_w_weight);
 
-        double x_mean = L_REGRESSION::compute_MEAN(m_x_observed);
-        double xx_sum = L_REGRESSION::compute_xx_sum(m_x_observed);
+        double x_mean = REGRESSION_BASIC::compute_MEAN(m_x_observed);
+        double xx_sum = REGRESSION_BASIC::compute_xx_sum(m_x_observed);
         this->compute_leverage(x_mean, xx_sum, m_x_observed, m_h_leverage);
 
         double temp_m_slope = 0;
         double temp_b_intercept = 0;
         uint32_t num_iteration = 0;
-        double residual_sum = L_REGRESSION::residual_sum_of_squared(m_y_observed, m_y_predicted);
+        double residual_sum = REGRESSION_BASIC::residual_sum_of_squared(m_y_observed, m_y_predicted);
         while (residual_sum > residual_tolerance && num_iteration < iteration_limit)
         {
-            double weight_sum = L_REGRESSION::compute_arr_sum(m_w_weight);
-            double x_weight = L_REGRESSION::compute_xy_sum(m_w_weight, m_x_observed) / weight_sum;
-            double y_weight = L_REGRESSION::compute_xy_sum(m_w_weight, m_y_observed) / weight_sum;
+            double weight_sum = REGRESSION_BASIC::compute_arr_sum(m_w_weight);
+            double x_weight = REGRESSION_BASIC::compute_xy_sum(m_w_weight, m_x_observed) / weight_sum;
+            double y_weight = REGRESSION_BASIC::compute_xy_sum(m_w_weight, m_y_observed) / weight_sum;
             double temp_wxy = 0;
             double temp_wxx = 0;
             for (uint32_t iter = 0; iter < m_num_data_points; iter++)
@@ -110,14 +110,14 @@ public:
             temp_m_slope = temp_wxy / temp_wxx;
             temp_b_intercept = y_weight - (temp_m_slope * x_weight);
 
-            L_REGRESSION::compute_predict(temp_m_slope, temp_b_intercept, m_x_observed, m_y_predicted);
-            L_REGRESSION::compute_residual(m_y_observed, m_y_predicted, m_r_residual);
+            REGRESSION_BASIC::compute_predict(temp_m_slope, temp_b_intercept, m_x_observed, m_y_predicted);
+            REGRESSION_BASIC::compute_residual(m_y_observed, m_y_predicted, m_r_residual);
 
-            double val_MAD = L_REGRESSION::compute_MAD(m_r_residual);
+            double val_MAD = REGRESSION_BASIC::compute_MAD(m_r_residual);
 
             compute_weight(m_r_residual, m_h_leverage, val_MAD, m_w_weight);
 
-            residual_sum = std::abs(L_REGRESSION::compute_xy_sum(m_r_residual, m_w_weight));
+            residual_sum = std::abs(REGRESSION_BASIC::compute_xy_sum(m_r_residual, m_w_weight));
             num_iteration++;
         }
 

@@ -4,7 +4,7 @@
  * Therefore, the validation is done by comparing result from Matlab and C++ implementation manually.
 */
 #include "test_case.hpp"
-#include "../include/l_regression.hpp"
+#include "../include/regression_basic.hpp"
 #include "../include/m_estimator_andrews.hpp"
 #include "../include/m_estimator_bisquare.hpp"
 #include "../include/m_estimator_cauchy.hpp"
@@ -20,7 +20,7 @@ int main()
 {
     double m_ols = 0;
     double b_ols = 0;
-    L_REGRESSION ols_regression;
+    REGRESSION_BASIC ols_regression;
     ols_regression.ols_regression(x_observed, y_observed, m_ols, b_ols);
 
     // cout << scientific << m_ols << "\n";
