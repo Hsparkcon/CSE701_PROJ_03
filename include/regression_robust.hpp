@@ -1,11 +1,26 @@
 #pragma once
 #include "l_regression.hpp"
 
+/**
+ * @brief
+ * REGRESSION_ROBUST class is a collection of member function and variables used in the project.
+ * REGRESSION_ROBUST class especially uses M-estimator for robust regression computation.
+ * REGRESSION_ROBUST class member function "compute_weight()" is declared as pure weight function
+ * that must be implemented at a derived class.
+ */
 class REGRESSION_ROBUST : public L_REGRESSION
 {
 public:
     REGRESSION_ROBUST() {}
 
+    /**
+     * @brief
+     * Construct a new REGRESSION_ROBUST object and initializes member variables including
+     * size vectors that will be used during computation.
+     *
+     * @param[in] x_observed A collection of observed data's independent variables (X-Axis).
+     * @param[in] y_observed A collection of observed data's dependent variables (Y-Axis).
+     */
     REGRESSION_ROBUST(const std::vector<double> &x_observed, const std::vector<double> &y_observed)
         : m_x_observed(x_observed), m_y_observed(y_observed), m_num_data_points(static_cast<uint32_t>(x_observed.size()))
     {
@@ -20,26 +35,51 @@ public:
 
     virtual ~REGRESSION_ROBUST() {}
 
+    /**
+     * @brief Gets the approximate slope of the line of best fit.
+     *
+     * @return double
+     */
     double get_slope() const
     {
         return this->m_slope;
     }
 
+    /**
+     * @brief Gets the approximate intercept of the line of best fit.
+     *
+     * @return double
+     */
     double get_intercept() const
     {
         return this->m_intercept;
     }
 
+    /**
+     * @brief Gets the weight of observed data point computed during the robust regression process.
+     *
+     * @param[out] w_weight A collection of observed data's weight.
+     */
     void get_weight(std::vector<double> &weight_retrived)
     {
         weight_retrived = this->m_w_weight;
     }
 
-    uint32_t get_num_iteration() const{
+    /**
+     * @brief Gets the number of iteration to complete the robust regression computation.
+     *
+     * @return double
+     */
+    uint32_t get_num_iteration() const
+    {
         return this->m_num_iteration;
     }
 
-    void perform_regression_v2()
+    /**
+     * @brief Proceed regression with the given data.
+     *
+     */
+    void perform_regression()
     {
         double init_slope = 0;
         double init_intercept = 0;
@@ -109,18 +149,32 @@ private:
     double m_slope;
     double m_intercept;
 
+    /**
+     * @brief Initializes weight of observed data.
+     *
+     * @param[in] y_observed A collection of observed data's dependent variables (Y-Axis).
+     * @param[in] y_predicted A collection of predicted dependent variables (Y-Axis).
+     * @param[out] w_weight A collection of initialized weights.
+     */
     void init_weight(
         const std::vector<double> &y_observed,
         const std::vector<double> &y_predicted,
         std::vector<double> &w_weight)
     {
-
         for (uint32_t iter = 0; iter < w_weight.size(); iter++)
         {
             w_weight[iter] = 1.0 / std::pow((y_observed[iter] - y_predicted[iter]), 2);
         }
     }
 
+    /**
+     * @brief Computes leverage of observed data.
+     * 
+     * @param[in] x_mean A average of observed data's independent variables (X-Axis).
+     * @param[in] xx_sum A sum of pow(observed data's X-Axis, 2).
+     * @param[in] x_observed A collection of observed data's independent variables (X-Axis).
+     * @param[out] h_leverage A collection of observed data's leverage
+     */
     void compute_leverage(
         const double x_mean,
         const double xx_sum,

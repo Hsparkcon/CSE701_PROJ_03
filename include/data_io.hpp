@@ -40,7 +40,7 @@ public:
 
     /**
      * @brief
-     * The function loads .dvec format file and returns two vectorss containing
+     * The function loads .dvec format file and returns two vectors containing
      * - a collection of independent variables (X-Axis values)
      * - a collection of dependent variables (Y-Axis values)
      *

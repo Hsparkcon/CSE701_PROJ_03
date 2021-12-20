@@ -174,7 +174,7 @@ public:
             break;
         }
 
-        regression->perform_regression_v2();
+        regression->perform_regression();
 
         m_m_slope = regression->get_slope();
         m_b_intercept = regression->get_intercept();
