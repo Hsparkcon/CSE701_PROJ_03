@@ -1,6 +1,6 @@
 /**
  * The file contains facade version of outlier detection method.
- * The class FACADE_DETECTION inherits class OUTLIER_DETECTION with is-a relation
+ * 
  */
 #pragma once
 #include "outlier_detection.hpp"
@@ -54,6 +54,7 @@ DETECTION_METHOD validate_det_method(const std::string &target_method)
  *  the required data can be appropriately provided.
  *  Use of FACADE_DETECTION class is suggested instead of OUTLIER_DETECTION class
  *  if the user does not plan to change internal computation methods.
+ *  FACADE_DETECTION class inherits class OUTLIER_DETECTION with is-a relation.
  */
 class FACADE_DETECTION : public OUTLIER_DETECTION
 {

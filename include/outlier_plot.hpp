@@ -120,7 +120,7 @@ public:
     /**
      * @brief The function generates BMP output with given name.
      *
-     * @param file_name Name of file to be generated, it must include file format (.bmp) as part of name.
+     * @param file_name Name of the file to be generated, it must include file format (.bmp) as part of the name.
      */
     void generate_result(const std::string file_name)
     {
