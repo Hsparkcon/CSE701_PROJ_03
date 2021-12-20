@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[])
 {
-    if (argc < 5 || argc > 5)
+    if (argc < 4 || argc > 4)
     {
         std::cout << "The program is designed to perform linear regression and detect outlier.\n\n"
                      "First Input\n"
