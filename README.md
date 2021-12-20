@@ -57,7 +57,7 @@
 > >   make[2]: warning:  Clock skew detected.  Your build may be incomplete.
 > >   ```
 > >
-> > - Please do the follwoing to solve the **WARNING MESSAGE**
+> > - Please do the followings to solve the **WARNING MESSAGE**
 > >
 > >   ```bash
 > >   make clean
@@ -79,7 +79,7 @@
 
 ## Using the executable
 
->Please reloacte the generated executable where the user want by default
+>Please relocate the generated executable where the user want by default
 >
 >> #### For Linux OS
 >> ```bash
@@ -137,7 +137,7 @@
 >> Example Input for Windows
 >>   proj_r.exe bisquare standardized_residual observed_x.dvec observed_y.dvec
 >> ```
->> - Excuting program without input parameter will provide basic description about how to use the program.
+>> - Executing program without input parameter will provide basic description about how to use the program.
 >
 >
 >
@@ -145,7 +145,7 @@
 >> > **weight_func** 
 >> >
 >> > - specifies weight function which will be used in Robust Regression process to adjust effectiveness of given data point. 
->> > - The data points with weight near 1 has bigger effectiveness while the data points near 0 has smaller effecitveness. 
+>> > - The data points with weight near 1 has bigger effectiveness while the data points near 0 has smaller effectiveness. 
 >> > - Please check the [link](https://www.mathworks.com/help/stats/robustfit.html?s_tid=doc_ta#mw_48d239e7-b4dc-4a5e-8e97-ba7c34ce85b9) for detail. 
 >> > - The followings are list of weight function option for the program.
 >> >   - andrews
@@ -158,8 +158,8 @@
 >> >   - welsch
 >> 
 >> > **detect_func**
->> > - specifeis outlier detection function which will be used in Outlier Detection process to compute standard point of define what is outlier in the data.
->> > - The followins are list of outlier detection method for the program.
+>> > - Specifies outlier detection function which will be used in Outlier Detection process to compute standard point of define what is outlier in the data.
+>> > - The followings are list of outlier detection method for the program.
 >> >   - standardized_residual - Suggested option
 >> >   - weight - Not suggested option
 >> 
@@ -184,7 +184,7 @@
 >
 > - To see the detailed examples of using the classes, please check the code under the example directory
 >
-> - The classes its name starts with FACADE keyword are the class designed for convinience of users who are not experienced in C/C++ or who want to use default setting.
+> - The classes its name starts with FACADE keyword are the class designed for convenience of users who are not experienced in C/C++ or who want to use default setting.
 >
 > - The classes automatically validate inputs and initialize everything required for proceeding computation.
 >
@@ -195,7 +195,7 @@
 > >   #### Robust Regression
 > >   - Please includes **facade_regression.hpp**
 > >   - Instantiates **FACADE_REGRESSION** object with required input variables.
-> >   - Use member function **proceed_regression()** to perfrom regression
+> >   - Use member function **proceed_regression()** to perform regression
 > >   - Use member function **get_estimates(double &m_slope, double &b_intercept)** to get estimates.
 > >   - Use member function **get_w_weight(std::vector<double> &w_weight)** to get weights.
 >
@@ -205,7 +205,7 @@
 > >
 > > - Please includes **facade_detection.hpp**
 > > - Instantiates **FACADE_DETECTION** object with required input variables.
-> > - Use member function **proceed_detection(DETECTION_METHOD target_method)** to perfrom detection.
+> > - Use member function **proceed_detection(DETECTION_METHOD target_method)** to perform detection.
 > > - Use member function **get_outliers(std::vector<double> &x_outliers, std::vector<double> &y_outliers)** to get outliers.
 > > - Use member function **get_inliers(std::vector<double> &x_inliers, std::vector<double> &y_inliers)** to get inliers.
 
