@@ -5,7 +5,6 @@
 
 int main(int argc, char *argv[])
 {
-    argc = 5;
     if (argc < 5 || argc > 5)
     {
         std::cout << "The program is designed to perform linear regression and detect outlier.\n\n"
@@ -19,16 +18,14 @@ int main(int argc, char *argv[])
                      "\tPlease choose one between 'weight' and 'standardized_resdual'\n\n"
 
                      "Third Input\n"
-                     "\tPath to the first file - observed x data.\n\n"
+                     "\tPath to the observed data file.\n\n"
 
-                     "Forth Input\n"
-                     "\tPath to the second file - observed y data.\n\n"
                   << std::endl;
 
         std::cout << "Example Input for Linux\n"
-                     "\tproj_r bisquare standardized_residual observed_x.dvec observed_y.dvec\n"
+                     "\tproj_r bisquare standardized_residual observed_data.dvec\n"
                      "Example Input for Windows\n"
-                     "\tproj_r.exe bisquare standardized_residual observed_x.dvec observed_y.dvec\n"
+                     "\tproj_r.exe bisquare standardized_residual observed_data.dvec\n"
                   << std::endl;
         return 0;
     }
