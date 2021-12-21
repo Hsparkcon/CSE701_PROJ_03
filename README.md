@@ -28,10 +28,13 @@
 
 ## Prerequisite
 >
-> - [CMAKE](https://cmake.org/) version **3.18.1** or above
-> - C/C++ compiler that supports **C++20** standard
-> - Any **text** file editor
-> - Any **iamge** viewer
+>- [CMAKE](https://cmake.org/) version **3.18.1** or above
+>- C/C++ compiler that supports **C++20** standard
+>
+>  - GNU/CLNAG for Linux
+>  - MSVC and MSBuild.exe (contained in VS20##) for Windows
+>- Any **text** file editor
+>- Any **iamge** viewer
 
 &nbsp;
 
