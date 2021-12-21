@@ -1,114 +1,193 @@
 # CSE 701 Project 03 - Outlier detection by Robust Regression
 
 ## Description
->
-> - The code is designed to perform following operations.
->
-> - Computing parameters (slope and intercept) of **best line of fit** by robust linear regression with M-estimation.
->
-> - Detecting outliers in the given data by
->   - standardized residual
->   - weight of each data point given during robust regression
->
-> - Generating visualized result (in BMP format) that shows
->   - line of best fit for the input data
->   - observed data points
->   - detected outlier data points
->   - detected inlier data points
+
+ - The code is designed to perform following operations.
+
+ - Computing parameters (slope and intercept) of **best line of fit** by robust linear regression with M-estimation.
+
+ - Detecting outliers in the given data by
+   - standardized residual
+   - weight of each data point given during robust regression
+
+ - Generating visualized result (in BMP format) that shows
+   - line of best fit for the input data
+   - observed data points
+   - detected outlier data points
+   - detected inlier data points
 
 &nbsp;
 
 ## Environment
->
-> - Windows/Linux OS
-> - Command-line interface is required
-> - Graphic user interface is not supported
+
+ - Windows/Linux OS
+ - Command-line interface is required
+ - Graphic user interface is not supported
 
 &nbsp;
 
 ## Prerequisite
->
->- [CMAKE](https://cmake.org/) version **3.18.1** or above
->- C/C++ compiler that supports **C++20** standard
->
->  - GNU/CLNAG for Linux
->  - MSVC and MSBuild.exe (contained in VS20##) for Windows
->- Any **text** file editor
->- Any **iamge** viewer
+
+- [CMAKE](https://cmake.org/) version **3.18.1** or above
+- C/C++ compiler that supports **C++20** standard
+
+  - [GCC](https://gcc.gnu.org/) or [CLANG](https://clang.llvm.org/) for Linux
+  - [MSVC](https://visualstudio.microsoft.com/) with MSBuild.exe (contained in VS20XX) or [MinGW-w64](https://www.mingw-w64.org/) for Windows
+- Any **text** file editor
+- Any **iamge** viewer
 
 &nbsp;
 
 ## Compilation
+### Automated compilation
+
+- Automated compilation uses Shell/Batch script.
+- The scripts assume that every prerequisite is installed with the default setting.
+- If custom installed is used, please modify the shell/batch script with any text editor or follow manual compilation. 
+- The shell/batch scripts will
+  1. generate build directory for the compilation process.
+  2. generate execute directory and copy executable and example input to the directory.
+  3. remove build directory after completing above processes.
+
+#### Linux OS
 >
->```bash
->mkdir build
->cd build
->cmake ..
->```
+>````bash
+>./Compile_Lin_ver.sh
+>````
 >
+>**Note**
 >
->### For Linux environment
+>- Please **ignore** the warning message related to the time skew.
+
+#### Windows OS with Visual Studio 20XX (MSVC)
 >
-> > ```bash
-> > make
->> ```
->> **NOTE**
->> - If following **WARNING MESSAGE** is returned
->>   ```bash
->>   make[2]: Warning: File 'CMakeFiles/proj_r.dir/depend.make' has modification time 0.X s in the future
->>   make[2]: warning:  Clock skew detected.  Your build may be incomplete.
->>   ```
->> - Please do the followings to solve the **WARNING MESSAGE**
->>   ```bash
->>   make clean
->>   make
->>   ```
+> ````bash
+> .\Compile_Win_MSVC_ver.bat
+> ````
+
+#### Windows OS with MinGW-w64
 >
->### For Windows environment
+> ```bash
+> .\Compile_Win_MinGW_ver.bat
+> ```
+
+
+
+### Manual compilation
+
+- The manual compilation will do exactly the same thing described in the automated compilation.
+- It is written for users who do not want to use the .sh/.bat file, or the automated compilation cannot be done due to system settings.
+
+#### Linux OS
 >
->> - **NOTE** It is okay to ignore error message related to *ALL_BUILD*
->> 1. Open CSE701_PROJ_03.sln
-> > 2. Press Local Windows debugger
-> > 3. Relocate proj_r.exe under Release directory to where input data is.
+> ```bash
+> cmake -S . -B build/
+> 
+> cd build
+> make
+> cd ..
+> 
+> mkdir execute
+> cp build/proj_r execute
+> cp example_data/observed_data.dvec
+> 
+> rm -r build
+> ```
+>
+> **NOTE**
+>
+> - If following **WARNING MESSAGE** is returned after **make** command.
+>
+> ```bash
+> make[2]: Warning: File 'CMakeFiles/proj_r.dir/depend.make' has modification time 0.X s in the future
+> make[2]: warning:  Clock skew detected.  Your build may be incomplete.
+> ```
+>
+> - The warning can be **ignored**, but do the following if you want to fix the warning message.
+>
+> ```bash
+> make clean
+> make
+> ```
+
+#### Windows OS with Visual Studio 20XX (MSVC)
+>
+> ```bash
+> cmake -S . -B build/
+> compiler_path compile_target compiler_mode
+> 
+> mkdir execute
+> copy build\Release\proj_r.exe execute
+> copy example_data\observed_data.dvec execute
+> ```
+>
+> where
+>
+> - compiler_path = path to MSBuild.exe
+>   - If environment variable to MSBuild.exe is set => MSBuild.exe
+>   - If environment variable to MSBuild.exe is not set, but Visual Studio 20XX installed with defualt setting => C:\Program Files (x86)\Microsoft Visual Studio\20XX\Community\MSBuild\Current\Bin\MSBuild.exe
+> - compile_target = build\CSE701_PROJ_03.sln
+> - compiler_mode = /property:Configuration=Release
+
+#### Windows OS with MinGW-w64
+>
+> ```bash
+> cmake -S . -B build/ -G "MinGW Makefiles"
+> 
+> cd build
+> make
+> cd ..
+> 
+> mkdir execute
+> copy build\Release\proj_r.exe execute
+> copy example_data\observed_data.dvec execute
+> ```
 
 &nbsp;
 
 ## Using the executable
 
->Please relocate the generated executable where the user want by default
+- Please relocate the desired input data file under execute directory or relocate the executable under the execute directory to where the user wants.
+
+### For Linux OS
+> ```bash
+> ./proj_r weight_func detect_func observed_data.dvec
+> ```
 >
->### For Linux OS
+### For Windows OS
+
+> ```bash
+> ./proj_r.exe weight_func detect_func observed_data.dvec
+> ```
+
+### Example 1
+
+> - The input will computes parameters for best line of fit by using Robust Regression with **bisquare** as its weight function, and differentiate **inlier** and **outlier** by using **standardized residual** as outlier detection method.
+> - It will generate 
+>   - inlier_data.dvec
+>   - outlier_data.dvec
+>   - result_plot.bmp
+>
+> #### Input
 >> ```bash
->> ./proj_r weight_func detect_func observed_data.dvec
->> ```
->
-> ### For Windows OS
-> 
->> ```bash
->> ./proj_r.exe weight_func detect_func observed_data.dvec
->> ```
->
->### Example 1
->
-> > - Input
-> > ```bash
 >> ./proj_r bisquare standardized_residual observed_data.dvec
 >> ```
->> - output
+> #### output
 >> ```bash
 >> Computed slope: 2.000000e+00
 >> Computed intercept: 3.000000e+00
 >> Detected outliers: 22 out of 100
 >> ```
->> - The above input will computes parameters for best line of fit by using Robust Regression with **bisquare** as its weight function, and differentiate **inlier** and **outlier** in the observed data point using **standardized residual** as outlier detection method.
 >
->### Example 2
+
+
+### Example 2
 >
->> - Input
+> #### Input
 >> ```bash
-> > ./proj_r
-> > ```
->> - output
+>> ./proj_r
+>> ```
+> #### output
 >> ```bash
 >> The program is designed to perform linear regression and detect outlier.
 >> First Input
@@ -127,14 +206,14 @@
 >> proj_r.exe bisquare standardized_residual observed_data.dvec
 >> ```
 >
->### INPUTS
->
->> **weight_func**
+### INPUTS
+>#### weight_func
+> 
 >> - specifies weight function which will be used in Robust Regression process to adjust effectiveness of given data point.
 >> - The data points with weight near 1 has bigger effectiveness while the data points near 0 has smaller effectiveness.
 >> - Please check the [link](https://www.mathworks.com/help/stats/robustfit.html?s_tid=doc_ta#mw_48d239e7-b4dc-4a5e-8e97-ba7c34ce85b9) for detail.
-> > - The followings are list of weight function option for the program.
-> >   - andrews   
+>> - The followings are list of weight function option for the program.
+>>   - andrews   
 >>   - bisquare - Suggested option
 >>   - cauchy   
 >>   - fair
@@ -143,13 +222,14 @@
 >>   - talwar
 >>   - welsch
 >
->>   **detect_func**
->> - Specifies outlier detection function which will be used in Outlier Detection process to compute standard point of define what is outlier in the data.
+>#### detect_func
+> > - Specifies outlier detection function which will be used in Outlier Detection process to compute standard point of define what is outlier in the data.
 >> - The followings are list of outlier detection method for the program.
 >>  - standardized_residual - Suggested option
 >>  - weight - Not suggested option
->>   
->> **observed_data.dvec**
+>
+>#### observed_data.dvec
+> 
 >> - The input data which contains coordinate of observed data.
 >> - For example, if the given data set is a record of the amount of salary according to years of employment,
 >>   - years of employment the collection of independent variables
@@ -161,37 +241,34 @@
 
 ## Using the project as part of another project
 
-> - The following is simple explanation of how to use the classes in the project as part of another project.
->
-> - To see the detailed examples of using the classes, please check the code under the example directory
->
-> - The classes its name starts with FACADE keyword are the class designed for convenience of users who are not experienced in C/C++ or who want to use default setting.
->
-> - The classes automatically validate inputs and initialize everything required for proceeding computation.
->
-> - The classes its name does not start with FACADE requires manual initialization of input and output data such as vector size.
-> 
-> ### Robust Regression
-> 
-> > - Please includes **facade_regression.hpp**
-> > - Instantiates **FACADE_REGRESSION** object with required input variables.
->> - Use member function **proceed_regression()** to perform regression
->> - Use member function **get_estimates()** to get estimates.
->> - Use member function **get_w_weight()** to get weights.
->
-> #### Outlier Detection
-> 
-> > - Please includes **facade_detection.hpp**
-> > - Instantiates **FACADE_DETECTION** object with required input variables.
-> > - Use member function **proceed_detection()** to perform detection.
-> > - Use member function **get_outliers()** to get outliers.
->> - Use member function **get_inliers()** to get inliers.
+- The following is simple explanation of how to use the classes in the project as part of another project.
+- To see the detailed examples of using the classes, please check the code under the example directory
+- The classes its name starts with FACADE keyword are the class designed for convenience of users who are not experienced in C/C++ or who want to use default setting.
+- The classes automatically validate inputs and initialize everything required for proceeding computation.
+- The classes its name does not start with FACADE requires manual initialization of input and output data such as vector size.
+- Currently, code is **not separated** into .hpp and .cpp, and code uses **C++ standard libraries only**. Therefore, the code can be used by including the header files without special compilation options. 
+
+### Robust Regression
+
+> - Please includes **facade_regression.hpp**
+> - Instantiates **FACADE_REGRESSION** object with required input variables.
+> - Use member function **proceed_regression()** to perform regression
+> - Use member function **get_estimates()** to get estimates.
+> - Use member function **get_w_weight()** to get weights.
+
+#### Outlier Detection
+
+> - Please includes **facade_detection.hpp**
+> - Instantiates **FACADE_DETECTION** object with required input variables.
+> - Use member function **proceed_detection()** to perform detection.
+> - Use member function **get_outliers()** to get outliers.
+> - Use member function **get_inliers()** to get inliers.
 
 &nbsp;
 
 ## Operator Overloading in Project 03
 
-> - Because user-defined data structure is not used in the project 03, none of operators are overloaded in the project 03.
+- Because user-defined data structure is not used in the project 03, none of operators are overloaded in the project 03.
 
 &nbsp;
 

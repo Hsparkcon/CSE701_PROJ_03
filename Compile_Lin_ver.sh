@@ -5,7 +5,7 @@ make
 cd ..
 
 copy_execute_src="build/proj_r"
-copy_example_data_src="example_data/observed_data.dvec "
+copy_example_data_src="example_data/observed_data.dvec"
 copy_dest="execute"
 
 mkdir execute
