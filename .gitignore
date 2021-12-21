@@ -1,8 +1,9 @@
 # Ignore VSCODE configuration
 .vscode/
 
-# Ignore Function test folder
+# Ignore folders
 func_test/
+execute/
 
 # Ignore object files
 obj/
